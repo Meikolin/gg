@@ -1,0 +1,1080 @@
+##############################################################################
+
+   ————Python开发进阶 Day01————
+
+   ————字典和集合————
+
+   ————字典基础操作————
+*字典是容器、不可变、映射类型
+
+创建字典
+• 通过{}操作符创建字典
+• 通过dict()工厂方法创建字典
+• 通过fromkeys()创建具有相同值的默认字典
+>>> adict = {'name':'bob', 'age':23} 
+>>> bdict = dict((['name', 'bob'], ['age', 23])) 
+>>> print(bdict) 
+{'age': 23, 'name': 'bob’} 
+>>> cdict = {}.fromkeys(('bob', 'alice'), 23) 
+>>> print(cdict) 
+{'bob': 23, 'alice': 23}
+
+访问字典
+• 字典是映射类型,意味着它没有下标,访问字典中的值需要使用响应的键
+>>> for each_key in adict: 
+... print 'key=%s, value=%s' % (each_key, adict[each_key]) 
+key=age, value=23 
+key=name, value=bob 
+ 
+>>> print('%(name)s' % adict) 
+bob
+
+更新字典
+• 通过键更新字典
+  - 如果字典中有该键,则更新相关值
+  - 如果字典中没有该键,则向字典中添加新值
+>>> print adict 
+{'age': 23, 'name': 'bob'} 
+ 
+>>> adict['age'] = 22 
+>>> print(adict) 
+{'age': 22, 'name': 'bob'} 
+ 
+>>> adict['email'] = 'bob@tarena.com.cn' 
+>>> print adict 
+{'age': 22, 'name': 'bob', 'email': 'bob@tarena.com.cn'} 
+
+删除字典
+• 通过del可以删除字典中的元素或整个字典
+• 使用内部方法clear()可以清空字典
+• 使用pop()方法可以"弹出"字典中的元素
+>>> del adict['email’] 
+>>> print(adict) 
+{'age': 22, 'name': 'bob’} 
+>>> adict.pop('age’) 
+22 
+>>> print(adict) 
+{'name': 'bob’} 
+>>> adict.clear() 
+>>> print(aDict) 
+{}
+
+字典操作符
+• 使用字典键查找操作符[],查找键所对应的值
+• 使用in和not in判断键是否存在于字典中
+>>> adict = {'age': 23, 'name': 'bob'} 
+>>> print(adict['name’]) 
+Bob 
+ 
+>>> 'bob' in adict 
+False 
+ 
+>>> 'name' in adict 
+True
+
+   ————字典相关函数————
+作用于字典的函数
+• len():返回字典中元素的数目
+• hash():本身不是为字典设计的,但是可以判断某个对象是否可以作为字典的键
+>>> print(adict) 
+{'age': 23, 'name': 'bob’} 
+>>> print(len(adict)) 
+2 
+>>> hash(3) 
+3 
+>>> hash([]) 
+Traceback (most recent call last): 
+ File "<stdin>", line 1, in <module> 
+TypeError: unhashable type: 'list’
+
+字典内建方法
+• dict.copy():返回字典(深复制)的一个副本
+>>> print(adict) 
+{'age': 23, 'name': 'bob'} 
+ 
+>>> bdict = adict.copy() 
+>>> bdict['name'] = 'alice’ 
+>>> print(adict) 
+{'age': 23, 'name': 'bob'} 
+ 
+>>> print(bdict) 
+{'age': 23, 'name': 'alice’}
+
+• dict.get(key,default=None):对字典dict中的键key,返回它对应的值value,如果字典中不存在此键,则返回default的值
+
+• dict.setdefault(key,default=None):如果字典中不存在key键,由dict[key]=default为它赋值
+>>> print(adict) 
+{'age': 23, 'name': 'bob’} 
+>>> adict.setdefault('age', 20) 
+23 
+>>> print(adict) 
+{'age': 23, 'name': 'bob’} 
+>>> adict.setdefault('phone', '15033448899’) 
+'15033448899’ 
+>>> print(adict) 
+{'phone': '15033448899', 'age': 23, 'name': 'bob’}
+
+• dict.items():返回一个包含字典中(键,值)对元组的列表
+• dict.keys():返回一个包含字典中键的列表
+• dict.update(dict2):将字典dict2的键-值对添加到字典dict
+
+
+   ————集合————
+创建集合
+• 数学上,把set称做由不同的元素组成的集合,集合(set)的成员通常被称做集合元素
+• 集合对象是一组无序排列的可哈希的值
+• 集合有两种类型
+  - 可变集合set
+  - 不可变集合fronzenset
+>>> s1 = set('hello') 
+>>> s2 = frozenset('hello') 
+>>> s1 
+{'l', 'e', 'o', 'h'} 
+>>> s2 
+frozenset({'l', 'e', 'o', 'h'}) 
+
+集合类型操作符
+• 集合支持用in和not in操作符检查成员
+• 能够通过len()检查集合大小
+• 能够使用for迭代集合成员
+• 不能取切片,没有键
+>>> len(s1) 
+4 
+>>> for ch in s1: 
+... print(ch) 
+l
+e
+o
+h
+
+• |:联合,取并集
+• &:交集
+• -:差补
+>>> s1 = set('abc') 
+>>> s2 = set('cde') 
+>>> s1 | s2 
+{'e', 'd', 'b', 'a', 'c'} 
+>>> s1 & s2 
+{'c'} 
+>>> s1 - s2 
+{'b', 'a'}
+
+集合内建方法
+• set.add():添加成员
+• set.update():批量添加成员
+• set.remove():移除成员
+>>> s1 = set('hello') 
+>>> s1.add('new') 
+>>> s1 
+{'h', 'o', 'l', 'e', 'new'} 
+>>> s1.update('new') 
+>>> s1 
+{'h', 'o', 'l', 'w', 'e', 'new', 'n'} 
+>>> s1.remove('n') 
+>>> s1 
+{'h', 'o', 'l', 'w', 'e', 'new'}
+
+• s.issubset(t):如果s是t的子集,则返回True,否则返回false
+• s.issuperset(t):如果t是s的超集,则返回True,否则返回False
+• s.union(t):返回一个新集合,该集合是s和t的并集
+• s.intersection(t):返回一个新集合,该集合是s和t的交集
+• s.difference(t):返回一个新集合,该集合是s的成员,但不是t的成员
+
+   
+   ————时间方法————
+
+   ————time模块————
+时间表示方式
+• 时间戳timestamp:表示的是从1970年1月1日00:00:00开始按秒计算的偏移量
+• UTC(Coordinated Universal Time,世界协调时)亦即格林威治天文时间,世界标准时间.在中国为UTC+8.DST(Daylight Saving Time)即夏令时
+• 元组(struct_time):由9个元素组成
+
+struct_time元组
+索引   属性   值
+0   tm_year   2000
+1   tm_mon   1-12
+2   tm_mday   1-31
+3   tm_hour   0-23
+4   tm_min   0-59
+5   tm_sec   0-61
+6   tm_wday   0-6(0表示周一)
+7  tm_yday(一年中的第几天)  1-366
+8  tm_isdst(是否为dst时间)  默认为1
+
+time模块方法
+• time.localtime([secs]):将一个时间戳转换为当前时区的struct_time.secs参数未提供,则以当前时间为准
+
+• time.gmtime([secs]):和localtime()方法类似,gmtime()方法是将一个时间戳转换为UTC时区(0时区)的struct_time
+
+• time.time():返回当前时间的时间戳
+
+• time.mktime(t):将一个struct_time转化为时间戳
+
+• time.sleep(secs):线程推迟指定的时间运行.单位为秒
+
+• time.asctime([t]):把一个表示时间的元组或者struct_time表示为这种形式:'Sun Jun20 23:21:05 1993'.如果没有参数,将会将time.localtime()作为参数传入
+
+• time.ctime([secs]):把一个时间戳(按秒计算的浮点数)转化为time.asctime()的形式
+
+• time.strftime(format[,t]):把一个代表时间的元组或者struct_time(如由time.localtime()和time.gmtime()返回)转化为格式化的时间字符串.如果t未指定,将传入time.localtime()
+
+• time.strptime(string[,format]):把一个格式化时间字符串转化为struct_time.实际上它和strftime()是逆操作
+>>> time.strftime('%Y-%m-%d %X', time.localtime())
+'2017-12-12 12:58:19'
+
+时间样式(参数)  
+参考https://yiyibooks.cn/xx/python_352/library/time.html
+
+  
+   ————datetime模块————
+datetime模块方法
+• datetime.today():返回一个表示当前本地时间的datetime对象
+• datetime.now([tz]):返回一个表示当前本地时间的datetime对象,如果提供了参数tz,则获取tz参数所指时区的本地时间
+• datetime.strptime(date_string,format):将格式字符串转换为datetime对象
+• datetime.ctime(datetime对象):返回时间格式字串符
+• datetime.strftime(format):返回指定格式字串符
+
+时间计算
+• 使用timedelta可以很方便的在日期上做天days,小时hour,分钟,秒,毫秒,微妙的时间计算
+>>> dt = datetime.datetime.now() 
+>>> days = datetime.timedelta(days=100, hours=3) 
+>>> dt + days 
+datetime.datetime(2050, 6, 10, 20, 41, 20, 106546)
+
+
+   ————异常处理————
+
+   ————异常————
+什么是异常
+• 当python检测到一个错误时,解释器就会指出当前流已经无法继续执行下去,这时候就出现了异常
+• 异常是因为程序出现了错误而在正常控制流以外采取的行为
+• 这个行为又分为两个阶段:
+  - 首先是引起异常发生的错误
+  - 然后是检测(和采取可能的措施)阶段
+
+python中的异常
+• 当程序运行时,因为遇到未解的错误而导师中止运行,便会出现traceback消息,打印异常
+ 异常   描述
+ NameError  未声明/初始化对象
+ IndexError  序列中没有此索引
+ SyntaxError  语法错误
+ KeyboardInterrupt 用户中断执行
+ EOFError  没有内建输入,到达EOF标记
+ IOError   输入/输出操作失败
+
+try-except语句
+• 定义了进行异常监控的一段代码,并且提供了处理异常的机制
+try: 
+  try_suite #监控这里的异常
+except Exception[as reason]: 
+  except_suite #异常处理代码
+>>> try: 
+...   f = open('foo.txt') 
+... except FileNotFoundError: 
+...    print('No such file') 
+... 
+No such file 
+
+带有多个expect的try语句
+• 可以把多个except语句连接在一起,处理一个try块中可能发生的多种异常
+>>> try: 
+... data = int(input('input a number: ')) 
+...except KeyboardInterrupt: 
+... print 'user cancelled' 
+...except ValueError: 
+... print('you must input a number!’) 
+... 
+input a number: hello 
+you must input a number! 
+
+异常参数
+• 异常也可以有参数,异常引发后它会被传递给异常处理器
+• 当异常被引发后参数是作为附加帮助信息传递给异常处理器的
+>>> try: 
+...  10 / 0 
+... except ZeroDivisionError as e: 
+...  print('error', e) 
+... 
+error division by zero
+
+else子句
+• 在try范围中没有异常被检测到时,执行else子句
+• 在else范围中的任何代码运行前,try范围中的所有代码必须完全成功
+>>>try: 
+...  result = 100 / int(input("number: ")) 
+...except Exception as e: 
+...  print('Error:', e) 
+...else: 
+...  print(result) 
+... 
+number: 10 
+10.0
+
+finally子句
+• finally子句是无论异常是否发生,是否捕捉都会执行的一段代码
+• 如果打开文件后,因为发生异常导致文件没有关闭,可能会发生数据损坏.使用finally可以保证文件总是能正常的关闭
+
+   ————触发异常————
+raise语句
+• 想要吟唱异常,最简单的形式就是输入关键字raise,后面跟要引发的异常的名称
+• 执行raise语句时,Python会创建指定的异常类的一个对象
+• raise语句还可指定对异常对象进行初始化的参数
+
+断言
+• 断言是一句必须等价于布尔值为真的判定
+• 此外,发生异常也意味着表达式为假
+>>> assert 10 > 100, "Wrong" 
+Traceback (most recent call last): 
+ File "<stdin>", line 1, in <module> 
+AssertionError: Wrong
+
+
+   ————OS相关模块————
+
+   ————OS模块————
+os模块简介
+• 对文件系统的访问大多通过python的os模块实现
+• 该模块是python访问操作系统功能的主要接口
+• 有些方法,如copy等,并没有提供,可以使用shutil模块作为补充
+
+os模块方法
+ 函数   作用
+ symlink()  创建符号链接
+ listdir()  列出指定目录的文件
+ getcwd()  返回当前工作目录
+ mkdir()   创建目录
+ chmod()   改变权限模式
+ getatime()  返回最近访问时间
+ chdir()   改变工作目录
+
+   ————pickle模块————
+pickle模块简介
+• 把数据写入文件时,常规的文件方法只能把字符串对象写入.其他数据需先转换成字符串在写入文件
+• python提供了一个标准的模块,称为pickle.使用它可以在一个文件中储存在任何python对象,之后又可以把它完整无缺得取出来
+
+pickle模块方法
+• 分别调用dump()和load()可以存储、写入
+>>> import pickle as p 
+>>> shoplistile = 'shoplist.data' 
+>>> shoplist = ['apple', 'mango', 'carrot'] 
+>>> f = file(shoplistile, 'wb') 
+>>> p.dump(shoplist, f) 
+>>> f.close() 
+>>> 
+>>> f = file(shoplistile) 
+>>> storedlist = p.load(f) 
+>>> print storedlist 
+['apple', 'mango', 'carrot']
+
+##############################################################################
+
+   ————Python开发进阶 Day02————
+
+       ————函数基础————
+
+       ————创建函数————
+def语句
+• 函数用def语句创建,语法如下:
+def func(on_name(arguments): 
+ "func(on_documenta(on_string" 
+ func(on_body_suite
+• 标题行由def关键字,函数的名字,以及参数的集合(如果有的话)组成
+• def子句的剩余部分包括了一个虽然可选但是强烈推荐的文档字串,和必须的函数体
+
+前向引用
+• 函数不允许在函数未声明之前对其进行引用或者调用
+def foo(): 
+  print('in foo') 
+  bar() 
+ 
+foo()   #报错,因为bar没有定义
+-------------------------------------------------------------------- 
+def foo(): 
+  print('in foo') 
+  bar() 
+ 
+def bar(): 
+  print('in bar’) 
+foo()   #正常执行,虽然bar的定义在foo定义后面
+
+内部函数
+• 在函数体内创建另外一个函数时完全合法的,这种函数叫做内部/内嵌函数
+>>>def foo(): 
+...    def bar(): 
+...      print('bar() is called') 
+...    print('foo() is called’) 
+...    bar() 
+>>> foo() 
+foo() is called 
+bar() is called 
+>>> bar() 
+Traceback (most recent call last): 
+ File "<stdin>", line 1, in <module> 
+NameError: name 'bar' is not defined
+
+                           ————调用函数————
+函数操作符
+• 使用一对圆括号()调用函数,如果没有圆括号,只是对函数的引用
+• 任何输入的参数都必须放置在括号中
+>>> def foo(): 
+... print('Hello world!') 
+... 
+>>> foo() 
+Hello world! 
+>>> foo 
+<function(on foo at 0x7f18ce311b18>
+
+关键字参数
+• 关键字参数的概念仅仅针对函数的调用
+• 这种理念是让调用者通过函数调用中的参数名字来区分参数
+• 这样规范允许参数缺失或者不按顺序
+>>> def get_info(name, age): 
+... print("%s's age is %s" % (name, age)) 
+... 
+>>> get_info(23, 'bob') 
+23's age is bob 
+>>> get_info(age = 23, name = 'bob') 
+bob's age is 23
+
+参数组
+• python允许程序员执行一个没有显式定义参数的函数
+• 相应的方法是通过一个把元组(非关键字参数)或字典(关键字参数)作为参数组传递给函数
+func(*tuple_grp_nonkw_args, **dict_grp_kw_args)
+
+
+                              ————匿名函数————
+
+lambda
+• python允许用lambda关键字创造匿名函数
+• 匿名是因为不需要以标准的def方式来声明
+• 一个完整的lambda"语句"代表了一个表达式,这个表达式的定义体必须和声明放在同一行
+lambda [arg1[, arg2, ... argN]]: expression 
+ 
+>>> a = lambda x, y: x + y 
+>>> print(a(3, 4)) 
+7
+
+filter()函数
+• filter(func, seq):调用一个布尔函数func来迭代遍历每个序列中的元素;返回一个使func返回值为true的元素的序列
+• 如果布尔函数比较简单,直接使用lambda匿名函数就显得非常方便了
+>>> data = filter(lambda x: x % 2, [num for num in range(10)]) 
+>>> print(data)   #过滤出10以内的奇数
+[1, 3, 5, 7, 9] 
+
+
+                              ————函数高级应用————
+
+                              ————变量作用域————
+
+全局变量
+• 标识符的作用域是定义为其声明在程序里的可应用范围,也就是变量的可见性
+• 在一个模块中最高级别的变量有全局作用域
+• 全局变量的一个特征是除非被删除掉,否则它们的存活到脚本运行结束,且对于所有的函数,他们的值都是可以被访问的
+
+局部变量
+• 局部变量只是暂时地存在,仅仅只依赖于定义它们的函数现阶段是否处于活动
+• 当一个函数调用出现时,其局部变量就进入声明它们的作用域.在那一刻,一个新的局部变量名为那个对象创建了
+• 一旦函数完成,框架被释放,变量将会离开作用域
+• 如果局部与全局由相同名称的变量,那么函数运行时,局部变量的名称将会把全局变量名称遮盖住
+>>> x = 4 
+>>> def foo(): 
+...   x = 10 
+...   print('in foo, x =', x) 
+... 
+>>> foo() 
+in foo, x = 10 
+>>> print('in main, x =', x) 
+in main, x = 4
+
+global语句
+• 因为全局变量的名字能被局部变量给遮盖掉,所以为了明确地引用一个已命名的全局变量,必须使用global语句
+>>> x = 4 
+>>> def foo(): 
+...         global x 
+...         x = 10 
+...         print('in foo, x =', x) 
+... 
+>>> foo() 
+in foo, x = 10 
+>>> print('in main, x =', x) 
+in main, x = 10 
+
+名字空间
+• 任何时候,总有一个到三个活动的作用域(内建、全局和局部)
+• 标识符的搜索顺序依次是局部、全局和内建
+• 提到名字空间,可以想象是否有这个标识符
+• 提到变量作用域,可以想像是否可以"看见"这个标识符
+
+                               ————函数式编程————
+偏函数
+• 偏函数的概念是将函数式编程的概念和默认参数以及可变参数结合在一起
+• 一个带有多个参数的函数,如果其中某些参数基本上固定的,那么就可以通过偏函数为这些参数赋默认值
+>>> from operator import add 
+>>> from functools import parial  
+>>> add10 = parial(add, 10) 
+>>> print(add10(25))    
+35
+
+递归函数
+• 如果函数包含了对其自身的调用,该函数就是递归的
+• 在操作系统中,查看某一目录内所有文件、修改权限等都是递归的应用
+>>> def func(num):  
+... if  num ==  1:  
+...     return  1   
+... else:   
+...     return  num *   func(num    -   1)  
+... 
+>>> print(func(5))  
+120 
+>>> print(func(10)) 
+3628800
+
+生成器
+• 从句法上讲,生成器是一个带yield语句的函数
+• 一个函数或者子程序只返回一次,但一个生成器能暂停执行并返回一个中间的结果
+• yield语句返回一个值给调用者并暂停执行
+• 当生成器的next()方法被调用的时候,它会准确地从离开地方继续
+• 与迭代器相似,生成器以另外的方式来运作
+• 当到达一个真正的返回或者函数结束没有更多的值返回,StopIteration异常就会被抛出
+>>> def simp_gen(): 
+...     yield   '1' 
+...     yield   '2  ->  punch'  
+>>> mygen = simp_gen()  
+>>> mygen.next()    
+'1' 
+>>> mygen.next()    
+'2  ->  punch'  
+>>> mygen.next()    
+... ... 
+  StopIteration
+
+                             ————内部函数————
+闭包
+• 闭包将内部函数自己的代码和作用域以及外部函数的作用结合起来
+• 闭包的词法变量不属于全局名字空间域或者局部的,而属于其他的名字空间,带着"流浪"的作用域
+• 闭包对于安装计算,隐藏状态,以及在函数对象和作用域中随意地切换是很有用的
+• 闭包也是函数,但是他们能携带一些额外的作用域
+
+闭包实例
+• 创建通用的计数器
+>>> def counter(start=0):   
+... count   =   start   
+... def incr(): 
+...  nonlocal count   
+...  count += 1   
+...  return  count   
+... return  incr    
+>>> a = counter()   
+>>> b = counter(10) 
+>>> a() 
+1   
+>>> b() 
+11
+
+装饰器
+• 装饰器是在函数调用之上的修饰
+• 这些修饰仅是当声明一个函数或者方法的时候,才会应用的额外调用
+• 使用的装饰器的情形有:
+  - 引入日志
+  - 增加计时逻辑来检测性能
+  - 给函数加入事务的能力
+
+##############################################################################
+
+                        ————Python开发进阶 Day03————
+
+                               ————模块————
+
+                           ————模块和文件————
+
+什么是模块
+• 模块支持从逻辑上组织python代码
+• 当代码量变得相当大的时候,最好把代码分成一些有组织的代码段
+• 代码片段相互间有一定的联系,可能是一个包含数据成员和方法的类,也可能是一组相关但彼此独立的操作函数
+• 这些代码段是共享的,所以python允许"调入"一个模块,允许使用其他模块的属性来利用之前的工作成果,实现代码重用
+
+模块文件
+• 说模块是按照逻辑来组织python代码的方法,文件是物理层上组织模块的方法
+• 一个文件被看作是一个独立模块,一个模块也可以被看作是一个文件
+• 模块的文件名就是模块的名字加上扩展名.py
+
+名称空间
+• 名称空间就是一个从名称到对象的关系映射集合
+• 给定一个模块名之后,只可能有一个模块被导入到python解释器中,所以在不同模块间不会出现名称交叉现象
+• 每个模块都定义了它自己的唯一的名称空间
+>>> import foo 
+>>> import bar 
+>>> print(foo.hi)                #调用foo模中的hi变量
+hello   
+>>> print(bar.hi)                #调用bar模块中的hi变量
+greet
+
+                           ————导入模块————
+搜索路径
+• 模块的导入需要一个叫做"路径搜索"的过程
+• python在文件系统"预定义区域"中查找要调用的模块
+• 搜索路镜子sys.path中定义
+>>> import  sys 
+>>> print(sys.path) 
+['','/usr/local/lib/python36.zip','/usr/local/lib/python3.6','/usr/
+local/lib/python3.6/lib-dynload','/usr/local/lib/python3.6/site-packages']
+
+模块导入方法
+• 使用import导入模块
+• 可以在一行导入多个模块,但是可读性会下降
+• 可以只导入模块的某些属性
+• 导入模块时,可以为模块取别名
+>>> import Dme, os, sys 
+>>> from random import choice  
+>>> import pickle as p
+
+导入和加载
+• 当导入模块时,模块的顶层代码会被执行
+• 一个模块不管被导入(import)多少次,只会被加载(load)一次
+[root@py01 ~]# cat foo.py  
+hi = 'hello' 
+print(hi)   
+[root@py01 ~]# python3 
+>>> import foo 
+Hello                                   #第一次导入,执行print语句
+>>> import  foo                         #再次导入,print语句不再执行
+
+从zip文件中导入
+• 在2.3版本中,python加入了从ZIP归档文件导入模块的功能
+• 如果搜索路径中存在一个包含模块(py、.pyc、或.pyo文件)的.zip文件,导入时会把ZIP文件当作目录处理#导入sys模块,在搜索路径中加入相应的zip文件    
+>>> import sys     
+>>> sys.path.append('/root/pymodule.zip')   
+>>> import foo                 #导入pymodule.zip压缩文件中的foo模块    
+
+                                ————包————
+
+目录结构
+• 包是一个有层次的文件目录结构,为平坦的名称空间加入有层次的组织结构
+• 允许程序员把有联系的模块组合到一起
+• 包目录下必须有一个__init__.文件
+
+绝对导入
+• 包的使用越来越广泛,很多情况下导入子包会导致和真正的标准库模块发生冲突
+• 因此,所有的导入现在都被认为是绝对的,也就是说这些名字必须通过python路径(sys.path或PYTHONPATH)来访问
+
+相对导入
+• 绝对导入特性使得程序员失去了import的自由,为此出现了相对导入
+• 因为import语句总是绝对导入的,所以相对导入只应用于from-import语句
+[root@py01 ~]# ls -R phone/  
+phone/: 
+common_util.py  __init__.py voicedata   
+phone/voicedata:
+__init__.py post.py 
+    
+[root@py01 ~]# cat phone/voicedata/post.py 
+from .. import common_util
+
+                                 ————内置模块————
+hashlib模块
+• hashlib用来替换md5和sha模块,并使他们的API一致,专门提供hash算法
+• 包括md5、sha1、sha224、sha256、sha384、sha512,使用非常简单、方便
+>>> import hashlib 
+>>> m = hashlib.md5()   
+>>> m.update('hello world!')    
+>>> m.hexdigest()   
+'fc3ff98e8c6a0d3087d515c0473f8677'
+
+tarfile模块
+• tarfile模块允许创建、访问tar文件
+• 同时支持gzip、bzip2格式
+[root@py01 home]# ls /home/demo/ 
+install.log     mima    
+[root@py01 home]# python  
+>>> import tarfile 
+>>> tar = tarfile.open('/home/demo.tar.gz',   'w:gz') 
+>>> tar.add('demo') 
+>>> tar.close()
+
+                                 ————OPP基础————
+基本概念
+• 类(Class):用来描述具有相同的属性和方法的对象的集合.它定义了该集合中每个对象所共有的属性和方法.对象是类的实例
+• 实例化:创建一个类的实例,类的具体对象
+• 方法:类中定义的函数
+• 对象:通过类定义的数据结构实例.对象包括两个数据成员(类变量和实例变量)和方法
+
+创建类
+• 使用class语句来创建一个新类,class之后为类的名称并以冒号结尾
+• 类名建议使用驼峰形式
+class BearToy:    
+   pass
+
+创建实例
+• 类是蓝图,实例是根据蓝图创建出来的具体对象
+tidy = BearToy()
+
+                                 ————绑定方法————
+构造器方法
+• 当实例化类的对象是,构造器方法默认自动调用
+• 实例本身作为第一个参数,传递给self
+class BearToy:    
+  __init__(self, size, color): 
+    self.size = size    
+    slef.color  =   color                     
+if __name__ ==  '__main__': 
+   tidy = BearToy('small', 'orange')
+
+其他绑定方法
+• 类中定义的方法需要绑定在具体的实例,有实例调用
+• 实例方法需要明确嗲用
+class BearToy:    
+   def __init__(self, size, color): 
+     self.size = size    
+     self.color = color   
+                                                                                 def speak(self):    
+    print('hahaha') 
+ 
+if __name__ == '__main__': 
+    tidy = BearToy('small',    'orange')   
+    tidy.speak()
+
+                                ————OPP进阶————
+
+                              ————组合和派生————
+
+什么是组合
+• 类被定义后,目标就是要把它当成一个模块来使用,并把这些对象嵌入到你的代码中去
+• 组合就是让不同的类混合并加入到其它类中增加功能和代码重用性
+• 可以在一个大点的类中创建其它类的实例,实现一些其他属性和方法来增强对原来的类对象
+
+组合应用
+• 两个类明显不同
+• 一个类是另一个类的组件
+class Manufacture:    
+  def __init__(self, phone,email): 
+    self.phone = phone   
+    self.email = email   
+              
+class BearToy:  
+  def __init__(self, size, color, phone, email): 
+    self.size = size    
+    self.color = color   
+    self.vendor = Manufacture(phone, email)
+
+创建子类
+• 当类之间有显著的不同,并且较小的类是较大的类所需要的组件时组合表现得很好;但当设计"相同的类但有一些不同的功能"时,派生就是一个更加合理的选择了
+• OOP的更强大方面之一是能够使用一个已经定义好的类,扩展它或者对其进行修改,而不会影响系统中使用现存类的其他代码片段
+• OOD(面向对象设计)允许类特征在子孙类或子类重进行继承
+• 创建子类只需要在圆括号中写明从哪个父类继承即可
+class BearToy:    
+  def __init__(self, size, color): 
+    self.size = size    
+    self.color = color   
+  ... ...                                                                                         
+class NewBearToy: 
+   pass
+
+继承
+• 继承描述了基类的属性如何"遗传"给派生类
+• 子类可以继承它的基类的任何属性,不管是数据属性还是方法
+class BearToy:    
+  def __init__(self, size, color): 
+    self.size = size    
+    self.color = color   
+  ... ... 
+
+class   NewBearToy: 
+  pass    
+
+if __name__    ==  '__main__': 
+   tidy = NewBearToy('small', 'orange')   
+   tidy.speak()
+
+通过继承覆盖方法
+• 如果子类中有和父类同名的方法,父类方法将被覆盖
+• 如果需要访问父类的方法,则要调用一个未绑定的父类方法,明确给出子类的实例
+class BearToy:    
+  def __init__(self, size, color, phone, email): 
+    self.size = size    
+    self.color = color   
+    self.vendor = Manufacture(phone, email)  
+   ... ... 
+
+class NewBearToy(BearToy):    
+  def __init__(self, size, color, phone, email, date):  
+  super(NewBearToy, self).__init__(size, color, phone, email)  
+  self.date = date
+
+多重继承
+• python允许多重继承,即一个类可以是多个父类的子类,子类可以拥有所有父类的属性
+>>> class A:  
+...  def foo(self):  
+...    print('foo method’)    
+>>> class B:  
+...  def bar(self):  
+...    print('bar method’)    
+>>> class C(A, B): 
+...  pass    
+>>> c = C() 
+>>> c.foo() 
+foo method  
+>>> c.bar() 
+bar method
+
+
+                                  ————特殊方法————
+类方法
+• 使用classmethod装饰器定义
+• 第一个参数cls表示类本身
+class Date:   
+  def __init__(self, year, month, date):  
+    self.year = year    
+    self.month = month   
+    self.date = date    
+                                                                              if __name__ == '__main__': 
+   d1 = Date(2018,1,1)
+
+类方法实例
+class Date:   
+  def __init__(self, year, month, date): 
+      self.year = year    
+      self.month = month   
+      self.date = date    
+                                                                                  @classmethod 
+   def create_date(cls, string_date):   
+     year, month, date = map(int, string_date.split('-')) 
+     instance = cls(year, month, date)                                             return  instance  
+if __name__ == '__main__': 
+   d2 = Date.create_date('2018-05-04’)  
+
+静态方法
+• 基本上就是一个函数
+• 在语法上就像一个方法
+• 没有访问对象和它的字段或方法
+• 使用staticmethod装饰器定义
+
+静态方法实例
+class Date: 
+    def __init__(self, year, month, date): 
+        self.year = year 
+        self.month = month 
+        self.date = date 
+ 
+    @staDcmethod 
+    def is_date_valid(string_date): 
+        year, month, date = map(int, string_date.split('-')) 
+        return 1 <= date <= 31 and 1 <= month <= 12 and year < 
+3999 
+ 
+if __name__ == '__main__': 
+    print(Date.is_date_valid('2018-02-04')) 
+    print(Date.is_date_valid('2018-22-04'))
+
+__init__方法
+• 实例化类实例时默认会调用的方法
+class BearToy: 
+    __init__(self, size, color): 
+        self.size = size 
+        slef.color = color 
+ 
+if __name__ == '__main__': 
+    tidy = BearToy('small', 'orange')
+
+__str__方法
+• 打印/显示实例时调用方法
+• 返回字符串
+class BearToy: 
+    __init__(self, size, color): 
+        self.size = size 
+        slef.color = color 
+ 
+    def __str__(self): 
+        return '<Bear: %s %s>' % (self.size, self.color) 
+ 
+if __name__ == '__main__': 
+    Ddy = BearToy('small', 'orange') 
+    print(Ddy)
+
+__call__方法
+• 用于创建可调用的实例
+class BearToy: 
+    __init__(self, size, color): 
+        self.size = size 
+        slef.color = color 
+ 
+    def __call__(self): 
+        print('I am a %s bear' % self.size) 
+ 
+if __name__ == '__main__': 
+    tidy = BearToy('small', 'orange') 
+    print(tidy)
+
+
+##############################################################################
+
+                         ————Python开发进阶 Day04————
+
+                             ————正则表达式————
+
+匹配单个字符
+           记号                    说明
+           .                       匹配任意字符(换行符除外)
+           [...x-y...]             匹配字符组里的任意字符
+           [^...x-y...]            匹配不在字符组里的任意字符
+           \d                      匹配任意数字,与[0-9]同义
+           \w                      匹配任意数字字母字符,与[0-9a-zA-Z_]同义
+           \s                      匹配空白字符,与[\r\v\f\t\n]同义
+
+匹配一组字符
+           记号                    说明
+           literal                 匹配字符串的值
+           re1|re2                 匹配正则表达式re1或re2
+           *                       匹配前面出现的正则表达式零次或多次
+           +                       匹配前面出现的正则表达式一次或多次
+           ?                       匹配前面出现的正则表达式零次或一次
+           {M,N}                   匹配前面出现的正则表达式至少M次最多N次
+
+其他元字符
+           记号                    说明
+           ^                       匹配字符串的开始
+           $                       匹配字符串的结尾
+           \b                      匹配单词的边界
+           ()                      对正则表达式分组
+           \nn                     匹配已保存的子组
+
+贪婪匹配
+• *+、+和?都是贪婪匹配操作符,在其后加上?可以取消其贪婪匹配行为
+• 正则表达式匹配对象通过groups函数获取子组
+>>> data = 'My phone number is: 150888899999' 
+>>> m = re.search('.+(\d+)', data) 
+>>> print m.groups() 
+('9',) 
+>>>  
+>>> m = re.search('.+?(\d+)', data) 
+>>> m.groups() 
+('150888899999',)
+
+核心函数和方法
+match函数
+• 尝试用正则表达式模式从字符串的开头匹配,如果匹配成功,则返回一个匹配对象;否则返回None
+>>> import re 
+>>> m = re.match('foo', 'food')           #成功匹配 
+>>> print(m) 
+<_sre.SRE_Match object; span=(0, 3), match='foo'> 
+>>>  
+>>> m = re.match(‘foo’, ‘seafood’)      #未能匹配 
+>>> print(m) 
+None
+
+search函数
+• 在字符串中查找正则表达式模式的第一次出现,如果匹配成功,则返回一个匹配对象;否则返回None
+>>> import re 
+>>> m = re.search('foo', 'food') 
+>>> print(m) 
+<_sre.SRE_Match object; span=(0, 3), match='foo'> 
+>>>  
+>>> m = re.search(‘foo’, ‘seafood’)      #可以匹配在字符中间的模式 
+>>> print(m) 
+<_sre.SRE_Match object; span=(3, 6), match='foo'>
+
+group方法
+• 使用match或saarch匹配成功后,返回的匹配对象可以通过割肉铺方法获得匹配内容
+>>> import re 
+>>> m = re.match('foo', 'food') 
+>>> print(m.group()) 
+foo 
+ 
+>>> m = re.search('foo', 'seafood') 
+>>> m.group() 
+'foo'
+
+findall函数
+• 在字符串中查找正则表达式模式的所有(非重复)出现;返回一个匹配对象的列表
+>>> import re 
+>>> m = re.search('foo', 'seafood is food') 
+>>> print(m.group())    #search只匹配模式的第一次出现 
+foo 
+>>>  
+>>> m = re.findall(‘foo’, ‘seafood is food’)  #获得全部的匹配项 
+>>> print(m) 
+['foo', 'foo']
+
+findter函数
+• 和findall()函数有相同的功能,但返回的不是列表而是迭代器;对于每个匹配,该迭代器返回一个匹配对象
+>>> import re 
+>>> m = re.finditer('foo', 'seafood is food') 
+>>> for item in m: 
+...     print(item.group()) 
+...  
+foo 
+foo
+
+compile函数
+• 对正则表达式模式进行编译,返回一个正则表达式对象
+• 不是必须要用这种方式,但是在大量匹配的情况下,可以提升效率
+>>> import re 
+>>> paV = re.compile('foo') 
+>>> m = paV.match('food') 
+>>> print(m.group()) 
+foo 
+
+split方法
+• 根据正则表达式中的分隔符把字符分隔为一个列表,并返回成功匹配的列表
+• 字符串也有类似的方法,但是正则表达式更加灵活
+>>> import re      #使用 . 和 - 作为字符串的分隔符 
+>>> mylist = re.split('\.|-', 'hello-world.data') 
+>>> print(mylist) 
+['hello', 'world', 'data']
+
+sub方法
+• 把字符串中所有匹配正则表达式的地方替换成新的字符串
+>>> import re 
+>>> m = re.sub('X', 'Mr. Smith', 'aVn: X\nDear X') 
+>>> print(m) 
+attn: Mr. Smith 
+Dear Mr. Smith
+
+                           ————socket模块————
+
+                           ————C/S架构————
+什么是C/S架构
+• 服务器是一个软件或硬件,用于提供客户需要的"服务"
+• 硬件上,客户端常见的就是平时所使用的PC机,服务器常见的有联想、DELL等厂商生产的各种系列服务器
+• 软件上,服务器提供的服务主要是程序的运行,数据的发送与接受、合并、升级或其他的程序或数据的操作
+
+套接字
+• 套接字是一种具有"通信端点"概念的计算机网络数据结构
+• 套接字起源于20世纪70年代加利福尼大学伯克利分校版本的Unix
+• 一种套接字是Unix套接字,其“家族名"为AF_UNIX
+• 另一种套接字是基于网络的,"家族名"为AF_INET
+• 如果把套接字比做电话的插口,那么主机与端口就像区号和电话号码的一对组合
+
+面向连接与无连接
+• 无论你使用哪一种地址家族,套接字的类型只有两种.一种是面向连接的套接字,另一种是无连接的套接字
+• 面向连接的主要协议就是传输控制协议TCP,套接字类型为SOCK_STREAM
+• 无连接的主要协议是用户数据报协议UDP,套接字类型为SOCK_DGRAM
+• python中使用socket模块中的socket函数实现套接字的创建
+
+                            ————socket函数与方法————
+创建TCP服务器
+• 创建TCP服务器的主要步骤如下:
+  1.创建服务器套接字:s = socket.socket()
+  2.绑定地址到套接字:s.bind()
+  3.启动监听:s.listen()
+  4.接受客户连接:s.accept()
+  5.与客户端通信:recv()/send()
+  6.关闭套接字:s.close()
+
+创建TCP客户端
+• 创建TCP客户端的步骤主要如下:
+  1.创建客户端套接字:cs = socket.socket()
+  2.尝试连接服务器:cs.connect()
+  3.与服务器通信:cs.send()/cs.recv()
+  4.关闭客户端套接字:cs.close()
+
+创建UDP服务器
+• 创建UDP服务器的主要步骤如下:
+  1.创建服务器套接字:s = socket.socket()
+  2.绑定服务器套接字:s.bind()
+  3.接受、发送数据:s.recvfrom()/ss.sendto()
+  4.关闭套接字:s.close()
+
+创建UDP客户端
+• 创建UDP客户端的步骤主要如下:
+  1.创建客户端套接字:cs = socket.socket()
+  2.与服务器通信:cs.sendto()/cs.recvfrom()
+  3.关闭客户端套接字:cs.close()
